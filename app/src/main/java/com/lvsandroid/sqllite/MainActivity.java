@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             SQLiteDatabase myDatabase = this.openOrCreateDatabase("Users", MODE_PRIVATE, null);
 
-            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INT(3))");
+            myDatabase.execSQL("DROP TABLE users");
+            myDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INTEGER(3), id INTEGER PRIMARY KEY)");
 
             myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('rob',34)");
             myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('malbrouk',97)");
@@ -26,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
             int nameIndex = c.getColumnIndex("name");
             int ageIndex = c.getColumnIndex("age");
+            int idIndex = c.getColumnIndex("id");
 
             c.moveToFirst();
             while(c != null) {
+                Log.i("id", c.getString(idIndex));
                 Log.i("name", c.getString(nameIndex));
                 Log.i("age", Integer.toString(c.getInt(ageIndex)));
 
